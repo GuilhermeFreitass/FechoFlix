@@ -6,7 +6,7 @@ import { Navbar } from "./components/Navbar"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: 'FechoFlix',
+  title: 'FechôFlix',
   description: 'Descubra os melhores filmes e séries em um só lugar.',
 }
 

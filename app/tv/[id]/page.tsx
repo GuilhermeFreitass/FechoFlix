@@ -16,7 +16,10 @@ interface TVShowDetails {
   backdrop_path: string
   poster_path: string
   number_of_seasons: number
+  number_of_episodes: number
   genres: Array<{ id: number; name: string }>
+  status: string
+  networks: Array<{ id: number; name: string; logo_path: string }>
 }
 
 interface PageProps {
@@ -47,6 +50,12 @@ export default function TVShowDetails({ params }: PageProps) {
   }
 
   if (!show) return null
+
+  const statusMap = {
+    'Returning Series': 'Em exibição',
+    'Ended': 'Finalizada',
+    'Canceled': 'Cancelada',
+  } as const
 
   return (
     <div className="relative">
@@ -90,6 +99,9 @@ export default function TVShowDetails({ params }: PageProps) {
               <span className="text-gray-300">
                 {show.number_of_seasons} {show.number_of_seasons === 1 ? 'Temporada' : 'Temporadas'}
               </span>
+              <span className="text-gray-300">
+                {show.number_of_episodes} Episódios
+              </span>
             </div>
 
             <div className="flex gap-2 mb-6">
@@ -103,11 +115,40 @@ export default function TVShowDetails({ params }: PageProps) {
               ))}
             </div>
 
-            <div className="mb-8">
+            <div className="mb-6">
               <h2 className="text-xl font-semibold mb-2">Sinopse</h2>
               <p className="text-gray-300 leading-relaxed">
                 {show.overview || "Sem sinopse disponível."}
               </p>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <div>
+                <h2 className="text-xl font-semibold mb-2">Status</h2>
+                <p className="text-gray-300">
+                  {statusMap[show.status as keyof typeof statusMap] || show.status}
+                </p>
+              </div>
+
+              {show.networks.length > 0 && (
+                <div>
+                  <h2 className="text-xl font-semibold mb-2">Disponível em</h2>
+                  <div className="flex gap-4">
+                    {show.networks.map((network) => (
+                      <div 
+                        key={network.id}
+                        className="bg-white p-2 rounded-lg"
+                      >
+                        <img
+                          src={`${process.env.NEXT_PUBLIC_IMG_URL}${network.logo_path}`}
+                          alt={network.name}
+                          className="h-8 object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>

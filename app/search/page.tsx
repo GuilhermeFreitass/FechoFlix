@@ -3,9 +3,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { api } from '@/lib/axios'
 import { useSearchParams } from 'next/navigation'
-import { Pagination, Spin } from 'antd'
+import { Pagination } from 'antd'
 import { useState, Suspense } from 'react'
+import { CardSkeletonGrid } from '../components/CardSkeleton'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface SearchResult {
   id: number
@@ -50,9 +52,16 @@ function SearchResults() {
       </h1>
 
       {isLoading ? (
-        <div className="flex justify-center py-20">
-          <Spin size="large" />
-        </div>
+        <>
+          <CardSkeletonGrid count={20} />
+          <div className="flex justify-center mt-8">
+            <Pagination
+              total={10}
+              disabled
+              className="[&_.ant-pagination-item-active]:!bg-red-600 [&_.ant-pagination-item-active_a]:!text-white opacity-50"
+            />
+          </div>
+        </>
       ) : (
         <>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
@@ -68,9 +77,11 @@ function SearchResults() {
                         <span className="text-yellow-400">⭐</span>
                         <span className="text-white ml-1">{result.vote_average.toFixed(1)}</span>
                       </div>
-                      <img
+                      <Image unoptimized
                         src={`${process.env.NEXT_PUBLIC_IMG_URL}${result.poster_path}`}
-                        alt={result.title || result.name}
+                        alt={result.title || result.name || 'Poster'}
+                        width={300}
+                        height={450}
                         className="w-full rounded-lg transition-transform duration-300 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex flex-col items-center justify-center p-4">
@@ -112,9 +123,7 @@ function SearchResults() {
 // Componente de loading para o Suspense
 function SearchLoading() {
   return (
-    <div className="flex justify-center items-center min-h-[50vh]">
-      <Spin size="large" />
-    </div>
+    <CardSkeletonGrid count={20} />
   )
 }
 

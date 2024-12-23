@@ -1,4 +1,5 @@
 import { Typography, Card } from 'antd'
+import Image from 'next/image'
 import Link from 'next/link'
 
 const { Title } = Typography
@@ -28,9 +29,11 @@ export default function TrendingMovies({ movies }: TrendingMoviesProps) {
                 <span className="text-yellow-400">⭐</span>
                 <span className="text-white ml-1">{movie.vote_average.toFixed(1)}</span>
               </div>
-              <img
+              <Image unoptimized
                 src={`${process.env.NEXT_PUBLIC_IMG_URL}${movie.poster_path}`}
                 alt={movie.title}
+                width={300}
+                height={450}
                 className="w-full rounded-lg transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg flex items-center justify-center">

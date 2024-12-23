@@ -5,7 +5,7 @@ export default function HeroSection() {
       
       <div className="relative z-10 text-center space-y-8">
         <h1 className="text-6xl md:text-8xl font-bold text-red-600 mb-4 animate-fade-in">
-          FechoFlix
+          FechôFlix
         </h1>
         <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto animate-fade-in-up">
           Descubra os melhores filmes e séries em um só lugar. Sua próxima aventura cinematográfica começa aqui.
