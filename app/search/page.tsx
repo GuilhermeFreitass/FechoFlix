@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { api } from '@/lib/axios'
 import { useSearchParams } from 'next/navigation'
 import { Pagination, Spin } from 'antd'
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import Link from 'next/link'
 
 interface SearchResult {
@@ -18,7 +18,7 @@ interface SearchResult {
   first_air_date?: string
 }
 
-export default function SearchResults() {
+function SearchResults() {
   const searchParams = useSearchParams()
   const query = searchParams.get('q')
   const [page, setPage] = useState(1)
@@ -106,5 +106,23 @@ export default function SearchResults() {
         </>
       )}
     </div>
+  )
+}
+
+// Componente de loading para o Suspense
+function SearchLoading() {
+  return (
+    <div className="flex justify-center items-center min-h-[50vh]">
+      <Spin size="large" />
+    </div>
+  )
+}
+
+// Componente principal que envolve o SearchResults com Suspense
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<SearchLoading />}>
+      <SearchResults />
+    </Suspense>
   )
 } 
