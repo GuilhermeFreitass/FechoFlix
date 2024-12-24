@@ -51,19 +51,19 @@ export function Navbar() {
           <div className="flex gap-6">
             <Link 
               href="/" 
-              className={`${isActive('/')} transition-colors duration-200`}
+              className={`${isActive('/')} text-lg font-medium transition-colors duration-200`}
             >
               Início
             </Link>
             <Link 
               href="/movies" 
-              className={`${isActive('/movies')} transition-colors duration-200`}
+              className={`${isActive('/movies')} text-lg font-medium transition-colors duration-200`}
             >
               Filmes
             </Link>
             <Link 
               href="/tv" 
-              className={`${isActive('/tv')} transition-colors duration-200`}
+              className={`${isActive('/tv')} text-lg font-medium transition-colors duration-200`}
             >
               Séries
             </Link>
@@ -87,21 +87,21 @@ export function Navbar() {
           <div className="flex flex-col gap-4">
             <Link 
               href="/" 
-              className={`${isActive('/')} transition-colors duration-200`}
+              className={`${isActive('/')} text-lg font-medium transition-colors duration-200`}
               onClick={() => setIsMenuOpen(false)}
             >
               Início
             </Link>
             <Link 
               href="/movies" 
-              className={`${isActive('/movies')} transition-colors duration-200`}
+              className={`${isActive('/movies')} text-lg font-medium transition-colors duration-200`}
               onClick={() => setIsMenuOpen(false)}
             >
               Filmes
             </Link>
             <Link 
               href="/tv" 
-              className={`${isActive('/tv')} transition-colors duration-200`}
+              className={`${isActive('/tv')} text-lg font-medium transition-colors duration-200`}
               onClick={() => setIsMenuOpen(false)}
             >
               Séries

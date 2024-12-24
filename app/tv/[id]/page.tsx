@@ -6,6 +6,7 @@ import { Spin } from 'antd'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { use } from 'react'
+import { RatingForm } from '@/app/components/RatingForm'
 
 interface TVShowDetails {
   id: number
@@ -58,14 +59,14 @@ export default function TVShowDetails({ params }: PageProps) {
   } as const
 
   return (
-    <div className="relative">
+    <div className="relative min-h-screen bg-zinc-900">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 h-[500px]"
+        className="absolute inset-x-0 top-0 h-[600px]"
         style={{
           backgroundImage: `url(${process.env.NEXT_PUBLIC_IMG_URL}${show.backdrop_path})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'top',
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-900/60 to-zinc-900" />
@@ -117,12 +118,12 @@ export default function TVShowDetails({ params }: PageProps) {
 
             <div className="mb-6">
               <h2 className="text-xl font-semibold mb-2">Sinopse</h2>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-gray-300 text-lg leading-relaxed">
                 {show.overview || "Sem sinopse disponível."}
               </p>
             </div>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 mb-8">
               <div>
                 <h2 className="text-xl font-semibold mb-2">Status</h2>
                 <p className="text-gray-300">
@@ -149,6 +150,15 @@ export default function TVShowDetails({ params }: PageProps) {
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* Rating Form */}
+            <div className="mt-8 p-6 bg-zinc-800/50 backdrop-blur-sm rounded-lg">
+              <RatingForm 
+                mediaType="tv"
+                mediaId={show.id}
+                title={show.name}
+              />
             </div>
           </div>
         </div>

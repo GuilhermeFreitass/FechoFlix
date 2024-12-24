@@ -6,6 +6,7 @@ import { Spin } from 'antd'
 import { format } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { use } from 'react'
+import { RatingForm } from '@/app/components/RatingForm'
 
 interface MovieDetails {
   id: number
@@ -49,14 +50,14 @@ export default function MovieDetails({ params }: PageProps) {
   if (!movie) return null
 
   return (
-    <div className="relative">
+    <div className="relative min-h-screen bg-zinc-900">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 h-[500px]"
+        className="absolute inset-x-0 top-0 h-[600px]"
         style={{
           backgroundImage: `url(${process.env.NEXT_PUBLIC_IMG_URL}${movie.backdrop_path})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPosition: 'top',
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-900/60 to-zinc-900" />
@@ -105,9 +106,18 @@ export default function MovieDetails({ params }: PageProps) {
 
             <div className="mb-8">
               <h2 className="text-xl font-semibold mb-2">Sinopse</h2>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-gray-300 text-lg leading-relaxed">
                 {movie.overview || "Sem sinopse disponível."}
               </p>
+            </div>
+
+            {/* Rating Form */}
+            <div className="mt-8 p-6 bg-zinc-800/50 backdrop-blur-sm rounded-lg">
+              <RatingForm 
+                mediaType="movie"
+                mediaId={movie.id}
+                title={movie.title}
+              />
             </div>
           </div>
         </div>
