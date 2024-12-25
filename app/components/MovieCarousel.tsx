@@ -4,14 +4,7 @@ import { Carousel } from 'antd'
 import Link from 'next/link'
 import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons'
 import { useRef } from 'react'
-
-interface Movie {
-  id: number
-  title: string
-  backdrop_path: string
-  overview: string
-  vote_average: number
-}
+import { Movie } from './TrendingMovies'
 
 interface MovieCarouselProps {
   movies: Movie[]
@@ -29,25 +22,29 @@ export default function MovieCarousel({ movies }: MovieCarouselProps) {
       >
         {movies.map((movie) => (
           <Link href={`/movies/${movie.id}`} key={movie.id}>
-            <div className="relative h-[600px] cursor-pointer">
+            <div className="relative h-[70vh] cursor-pointer">
               <div 
                 className="absolute inset-0 bg-cover bg-center"
                 style={{
-                  backgroundImage: `url(${process.env.NEXT_PUBLIC_IMG_URL}${movie.backdrop_path})`
+                  backgroundImage: `url(${process.env.NEXT_PUBLIC_IMG_URL}${movie.backdrop_path})`,
+                  backgroundPosition: 'center 20%'
                 }}
               >
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-900/60 to-zinc-900" />
               </div>
-              <div className="relative h-full max-w-7xl mx-auto flex flex-col justify-end px-8 md:px-20 pb-20">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-bold">
+              <div className="relative h-full max-w-7xl mx-auto flex flex-col justify-end px-8 md:px-20 pb-32">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="bg-red-600 text-white px-4 py-2 rounded-full text-sm font-bold flex items-center gap-1">
                     ⭐ {movie.vote_average.toFixed(1)}
                   </span>
+                  <span className="text-gray-300 text-sm">
+                    {new Date(movie.release_date).getFullYear()}
+                  </span>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
                   {movie.title}
                 </h2>
-                <p className="text-base md:text-lg text-gray-200 max-w-2xl line-clamp-3">
+                <p className="text-lg md:text-xl text-gray-200 max-w-2xl line-clamp-3">
                   {movie.overview}
                 </p>
               </div>
@@ -59,16 +56,16 @@ export default function MovieCarousel({ movies }: MovieCarouselProps) {
       {/* Setas de navegação */}
       <button 
         onClick={() => carouselRef.current?.prev()}
-        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white w-12 h-12 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
       >
-        <CaretLeftOutlined className="text-xl" />
+        <CaretLeftOutlined className="text-2xl" />
       </button>
       
       <button 
         onClick={() => carouselRef.current?.next()}
-        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white w-10 h-10 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+        className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/75 text-white w-12 h-12 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
       >
-        <CaretRightOutlined className="text-xl" />
+        <CaretRightOutlined className="text-2xl" />
       </button>
     </div>
   )

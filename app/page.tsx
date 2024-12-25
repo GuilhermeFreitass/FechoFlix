@@ -18,11 +18,28 @@ interface Movie {
   overview: string
   poster_path: string
   vote_average: number
+  release_date: string
 }
 
 export default function Home() {
-  const { data: movies, isLoading: isLoadingMovies } = useQuery<{ results: Movie[] }>({
+  const { data: popularMovies, isLoading: isLoadingPopular } = useQuery<{ results: Movie[] }>({
     queryKey: ['popular-movies'],
+    queryFn: async () => {
+      const response = await api.get('/movie/popular', {
+        params: {
+          language: 'pt-BR',
+          region: 'BR'
+        }
+      })
+      return {
+        ...response.data,
+        results: response.data.results.slice(0, 5)
+      }
+    }
+  })
+
+  const { data: topRatedMovies, isLoading: isLoadingTopRated } = useQuery<{ results: Movie[] }>({
+    queryKey: ['top-rated-movies'],
     queryFn: async () => {
       const response = await api.get('/movie/top_rated', {
         params: {
@@ -30,20 +47,15 @@ export default function Home() {
           region: 'BR'
         }
       })
-      const data = response.data
-      const sortedResults = [...data.results]
-        .sort((a, b) => b.vote_average - a.vote_average)
-        .slice(0, 11)
-      
       return {
-        ...data,
-        results: sortedResults
+        ...response.data,
+        results: response.data.results.slice(0, 6)
       }
     }
   })
 
   const { data: tvShows, isLoading: isLoadingTVShows } = useQuery<{ results: TVShow[] }>({
-    queryKey: ['popular-tv'],
+    queryKey: ['top-rated-tv'],
     queryFn: async () => {
       const response = await api.get('/tv/top_rated', {
         params: {
@@ -51,17 +63,14 @@ export default function Home() {
           region: 'BR'
         }
       })
-      const data = response.data
-      const sortedResults = [...data.results]
-        .sort((a, b) => b.vote_average - a.vote_average)
-        .slice(0, 6)
-      
       return {
-        ...data,
-        results: sortedResults
+        ...response.data,
+        results: response.data.results.slice(0, 6)
       }
     }
   })
+
+  const isLoading = isLoadingPopular || isLoadingTopRated
 
   return (
     <Layout className="min-h-screen bg-zinc-900">
@@ -69,28 +78,21 @@ export default function Home() {
         <HeroSection />
         
         <div className="pt-16 space-y-8">
-          {isLoadingMovies ? (
-            <>
-              <section className="max-w-7xl mx-auto px-4">
-                <h2 className="text-3xl font-bold text-white mb-8">Filmes em Alta</h2>
-                <CardSkeletonGrid count={5} />
-              </section>
-              <section className="max-w-7xl mx-auto px-4">
-                <h2 className="text-3xl font-bold text-white mb-8">Filmes Populares</h2>
-                <CardSkeletonGrid count={4} />
-              </section>
-            </>
+          {isLoading ? (
+            <section className="max-w-7xl mx-auto px-4">
+              <CardSkeletonGrid count={11} />
+            </section>
           ) : (
             <>
-              {movies && <MovieCarousel movies={movies.results.slice(0, 5)} />}
-              {movies && <TrendingMovies movies={movies.results.slice(5)} />}
+              {popularMovies && <MovieCarousel movies={popularMovies.results} />}
+              {topRatedMovies && <TrendingMovies movies={topRatedMovies.results} />}
             </>
           )}
 
           {isLoadingTVShows ? (
             <section className="max-w-7xl mx-auto px-4 py-16">
               <h2 className="text-3xl font-bold text-white mb-8">Séries em Alta</h2>
-              <CardSkeletonGrid count={4} />
+              <CardSkeletonGrid count={6} />
             </section>
           ) : (
             tvShows && <TrendingTVShows shows={tvShows.results} />
