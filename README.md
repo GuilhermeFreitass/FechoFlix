@@ -108,33 +108,4 @@ NEXT_PUBLIC_IMG_URL=https://image.tmdb.org/t/p/original
 \`\`\`bash
 npm run dev
 \`\`\`
-
-## 📱 Responsividade
-
-O projeto foi desenvolvido com uma abordagem mobile-first, garantindo uma experiência consistente em diferentes dispositivos:
-
-- **Mobile**: Layout otimizado com menu hamburguer e busca adaptada
-- **Tablet**: Grid adaptativo para melhor aproveitamento do espaço
-- **Desktop**: Experiência completa com todas as funcionalidades
-
-## 🎨 Decisões de Design
-
-- **Cores**: Uso de vermelho (#dc2626) como cor principal, criando identidade visual
-- **Tipografia**: Fonte Inter para melhor legibilidade
-- **Animações**: Transições suaves para melhor feedback visual
-- **Loading States**: Skeletons para melhor experiência durante carregamento
-
-## 🔍 Funcionalidades da Busca
-
-- Busca em tempo real
-- Filtragem por tipo (filme/série)
-- Resultados paginados
-- Loading states durante a busca
-
-## 🚀 Próximos Passos
-
-- [ ] Implementar autenticação de usuários
-- [ ] Adicionar favoritos
-- [ ] Implementar sistema de avaliações
-- [ ] Adicionar mais filtros de busca
-- [ ] Implementar PWA
+.
